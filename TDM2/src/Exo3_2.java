@@ -28,6 +28,11 @@ public class Exo3_2 {
         DatagramPacket dpR = new DatagramPacket(bufR, bufR.length);
         while(true) {
         	socket.receive(dpR);
+        	String message = new String(bufR, dpR.getOffset(), dpR.getLength());
+        	if(!message.equals("red")) {
+            	socket.close();
+            	return;
+            }
         	set_red(frame);
         	Thread.sleep(1000);
         	set_green(frame);

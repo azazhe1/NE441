@@ -17,7 +17,7 @@ public class Exo3_1 {
 	{
 		DatagramSocket socket = new DatagramSocket(null);
         socket.bind(new InetSocketAddress(4001));
-        InetSocketAddress adrDest = new InetSocketAddress("192.168.130.167", 4002);
+        InetSocketAddress adrDest = new InetSocketAddress("127.0.0.1", 4002);
         
         
         JFrame frame = new JFrame("Chenillard");
@@ -33,6 +33,11 @@ public class Exo3_1 {
             DatagramPacket dpE = new DatagramPacket(bufE, bufE.length, adrDest);
             socket.send(dpE);
             socket.receive(dpR);
+            String message = new String(bufR, dpR.getOffset(), dpR.getLength());
+            if(!message.equals("red")) {
+            	socket.close();
+            	return;
+            }
         }
 	}
 	private void set_green(JFrame frame)
