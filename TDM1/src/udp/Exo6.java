@@ -19,6 +19,7 @@ public class Exo6 {
 		System.out.println("Connexion au serv");
 		DatagramSocket socket = new DatagramSocket();
 		InetSocketAddress adrDest = new InetSocketAddress("127.0.0.1", 29000);
+		byte[] bufR = new byte[2048];
 		int NbGame = 1;
 		int InGame = 0;
 		while(NbGame<=10) {
@@ -26,25 +27,33 @@ public class Exo6 {
 			{
 				System.out.println("===================================\nDébut de la partie "+ Integer.toString(NbGame));
 				InGame = 1;
-			}
-			
-			Scanner myObj = new Scanner(System.in);
-			String Game = myObj.nextLine();
-			byte[] bufE = Game.getBytes();
-	        DatagramPacket dpE = new DatagramPacket(bufE, bufE.length, adrDest);
-	        socket.send(dpE);
-	        System.out.println("Envoi d'un paquet UDP avec "+Game);
-	        byte[] bufR = new byte[2048];
-	        DatagramPacket dpR = new DatagramPacket(bufR, bufR.length);
-	        socket.receive(dpR);
-	        String reponse = new String(bufR, dpR.getOffset(), dpR.getLength());
-	        System.out.println("Le serveur a répondu "+reponse);
-	        if(reponse.equals("GAGNE"))
-	        {
-	        	System.out.println("Fin de la partie " + Integer.toString(NbGame));
-	        	NbGame = NbGame +1;
-	        	InGame = 0;
-	        }
+				byte[] bufE = new String("JOUER").getBytes();
+				DatagramPacket dpE = new DatagramPacket(bufE, bufE.length, adrDest);
+				System.out.println("Envoi d'un paquet UDP avec JOUER");
+				socket.send(dpE);
+			}else{
+				DatagramPacket dpR = new DatagramPacket(bufR, bufR.length);
+		        socket.receive(dpR);
+		        String reponse = new String(bufR, dpR.getOffset(), dpR.getLength());
+		        System.out.println("Le serveur a répondu "+reponse);
+		        if(reponse.equals("PING")) {
+		        	byte[] bufE = new String("PONG").getBytes();
+					System.out.println("Envoi d'un paquet UDP avec PONG");
+					DatagramPacket dpE = new DatagramPacket(bufE, bufE.length, adrDest);
+				    socket.send(dpE);
+		        }else if(reponse.equals("PONG")) {
+		        	byte[] bufE = new String("PING").getBytes();
+					System.out.println("Envoi d'un paquet UDP avec PING");
+					DatagramPacket dpE = new DatagramPacket(bufE, bufE.length, adrDest);
+				    socket.send(dpE);
+		        }else if(reponse.equals("GAGNE"))
+		        {
+		        	System.out.println("Fin de la partie " + Integer.toString(NbGame));
+		        	NbGame = NbGame +1;
+		        	InGame = 0;
+		        }
+			}        
 		}
+		socket.close();
 	}
 }
