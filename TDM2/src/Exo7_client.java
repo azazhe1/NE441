@@ -7,24 +7,24 @@ import java.net.SocketException;
 
 import javax.swing.JFrame;
 
-public class Exo6_client {
+public class Exo7_client {
 	public static void main(String[] args) throws Exception
 	{
-		Exo6_client exo6_client= new Exo6_client();
-		if(args.length!= 2) {
-			System.out.println("Usage: <port_serv> <last>");
+		Exo7_client exo7_client= new Exo7_client();
+		if(args.length!= 3) {
+			System.out.println("Usage: <port_serv> <ip_dest> <last_client(0/1)>");
 		}else {
-			exo6_client.execute(args[0],args[1]);
+			exo7_client.execute(args[0],args[1],args[2]);
 		}
 	}
 	
-	private void execute(String Port_srv_str, String Last) throws IOException
+	private void execute(String Port_srv_str, String Ip_dest,String Last) throws IOException
 	{
 		try {
 			int Port_srv = Integer.parseInt(Port_srv_str);
 			
 			DatagramSocket socket = new DatagramSocket(null);
-	        InetSocketAddress adrDest = new InetSocketAddress("127.0.0.1", Port_srv);
+	        InetSocketAddress adrDest = new InetSocketAddress(Ip_dest, Port_srv);
 	        
 	        byte[] bufR = new byte[2048];
 		    byte[] bufE = new String(Last).getBytes();

@@ -7,14 +7,14 @@ import java.util.ArrayList;
 import java.util.List;
 
 
-public class Exo6_serv {
+public class Exo7_serv {
 	public static void main(String[] args) throws Exception
 	{
-		Exo6_serv exo6_serv= new Exo6_serv();
+		Exo7_serv exo7_serv= new Exo7_serv();
 		if(args.length!= 1) {
 			System.out.println("Usage: <port_src>");
 		}else {
-			exo6_serv.execute(args[0]);
+			exo7_serv.execute(args[0]);
 		}
 		
 	}
