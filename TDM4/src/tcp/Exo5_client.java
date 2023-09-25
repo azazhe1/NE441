@@ -28,9 +28,7 @@ public class Exo5_client {
 		
 		FileOutputStream fos = new FileOutputStream(name_file);
 		Socket socket = new Socket();
-		//Integer Max_len;
-		//Integer Curent_len;
-		//Integer Older_value =  new Integer(0);
+		
 		long Max_len;
 		long Curent_len;
 		long Older_value;
