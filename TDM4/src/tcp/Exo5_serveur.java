@@ -1,5 +1,6 @@
 package tcp;
 
+import java.io.File;
 import java.io.FileInputStream;
 import java.io.IOException;
 import java.io.InputStream;
@@ -8,11 +9,11 @@ import java.net.InetSocketAddress;
 import java.net.ServerSocket;
 import java.net.Socket;
 
-public class Exo4_serveur {
+public class Exo5_serveur {
 	public static void main(String[] args) throws IOException
 	{
-		Exo4_serveur exo4_Serveur = new Exo4_serveur();
-		exo4_Serveur.execute();
+		Exo5_serveur exo5_Serveur = new Exo5_serveur();
+		exo5_Serveur.execute();
 	}
 	
 	@SuppressWarnings("resource")
@@ -37,8 +38,13 @@ public class Exo4_serveur {
 		System.out.println("File = "+msg);
 		
 		FileInputStream fis = new FileInputStream(msg.replace("\n",""));
-		byte[] buf = new byte[100_000];
+		File file= new File(msg.replace("\n",""));
+		
 		OutputStream os = socketConnexion.getOutputStream();
+		byte[] bufE = new String(file.length()+"\n").getBytes();//buffer taille
+		os.write(bufE);
+		
+		byte[] buf = new byte[100];//bufer file
 		int len = fis.read(buf);
 		while(len!=-1)
 		{
