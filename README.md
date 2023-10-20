@@ -39,17 +39,20 @@ public class HideMessage {
                 for (int x = 0; x < image.getWidth(); x++) {
                     int pixel = image.getRGB(x, y);
 
-                    // Masquer les bits de poids faible avec les bits du message secret
-                    int newPixel = (pixel & 0xFFFFFFFE) | Integer.parseInt(String.valueOf(binarySecret.charAt(binaryIndex)), 2);
+                    // Masquer les bits de poids faible avec les bits du message original
+                    int newPixel = (pixel & 0xFFFFFFFE) | Integer.parseInt(String.valueOf(binaryOriginal.charAt(binaryIndex)), 2);
+
+                    // Masquer les bits de poids fort avec les bits du message secret
+                    newPixel = (newPixel & 0x7FFFFFFF) | (Integer.parseInt(String.valueOf(binarySecret.charAt(binaryIndex)), 2) << 31);
 
                     image.setRGB(x, y, newPixel);
 
                     binaryIndex++;
-                    if (binaryIndex == binarySecret.length()) {
+                    if (binaryIndex == Math.max(binaryOriginal.length(), binarySecret.length())) {
                         break; // On a caché tout le message
                     }
                 }
-                if (binaryIndex == binarySecret.length()) {
+                if (binaryIndex == Math.max(binaryOriginal.length(), binarySecret.length())) {
                     break; // On a caché tout le message
                 }
             }
