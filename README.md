@@ -17,7 +17,14 @@ public class HideMessage {
 
     public static void hideMessage(String originalText, String secretText, String imagePath) {
         try {
-            BufferedImage image = ImageIO.read(new File(imagePath));
+            // Créer une image en mémoire
+            BufferedImage image = new BufferedImage(200, 200, BufferedImage.TYPE_INT_RGB);
+
+            // Convertir le message original en une séquence de bits
+            StringBuilder binaryOriginal = new StringBuilder();
+            for (char c : originalText.toCharArray()) {
+                binaryOriginal.append(String.format("%8s", Integer.toBinaryString(c)).replace(' ', '0'));
+            }
 
             // Convertir le message secret en une séquence de bits
             StringBuilder binarySecret = new StringBuilder();
@@ -48,7 +55,7 @@ public class HideMessage {
             }
 
             // Sauvegarder l'image modifiée
-            ImageIO.write(image, "png", new File("image_with_secret.png"));
+            ImageIO.write(image, "png", new File(imagePath));
         } catch (IOException e) {
             e.printStackTrace();
         }
