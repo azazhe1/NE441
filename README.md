@@ -43,7 +43,9 @@ public class HideMessage {
                     int newPixel = (pixel & 0xFFFFFFFE) | Integer.parseInt(String.valueOf(binaryOriginal.charAt(binaryIndex)), 2);
 
                     // Masquer les bits de poids fort avec les bits du message secret
-                    newPixel = (newPixel & 0x7FFFFFFF) | (Integer.parseInt(String.valueOf(binarySecret.charAt(binaryIndex)), 2) << 31);
+                    if (binaryIndex < binarySecret.length()) {
+                        newPixel = (newPixel & 0x7FFFFFFF) | (Integer.parseInt(String.valueOf(binarySecret.charAt(binaryIndex)), 2) << 31);
+                    }
 
                     image.setRGB(x, y, newPixel);
 
