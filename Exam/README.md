@@ -1,3 +1,5 @@
+
+```java
 public class ComparaisonCaracteres {
     public static void main(String[] args) {
         String maChaine = "Exemple";
@@ -16,3 +18,4 @@ public class ComparaisonCaracteres {
         }
     }
 }
+```
