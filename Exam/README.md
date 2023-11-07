@@ -19,3 +19,14 @@ public class ComparaisonCaracteres {
     }
 }
 ```
+
+```java
+int lenBufR = is.read(bufR);
+if (lenBufR != -1) {
+    // Décode le tableau de bytes en utilisant l'encodage UTF-8
+    String reponse = new String(bufR, 0, lenBufR, "UTF-8");
+    System.out.println("Reponse recue = " + reponse);
+}
+byte[] bufE = reponse.getBytes("UTF-8");
+os.write(bufE);
+```
